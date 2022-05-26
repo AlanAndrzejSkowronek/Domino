@@ -3,7 +3,7 @@ package Logic;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CardsInGame {
+public class CardsInGame implements printDeck {
 
     private List<DominoCard> cardsGame;
 
@@ -12,5 +12,11 @@ public class CardsInGame {
     }
     public List<DominoCard> getCardsGame() {
         return cardsGame;
+    }
+
+    public void printActualCards(){
+        for (DominoCard card : cardsGame){
+            card.printCard(card);
+        }
     }
 }
