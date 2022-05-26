@@ -4,7 +4,7 @@ import Logic.DominoCard;
 
 import java.util.List;
 
-public class Classic {
+public class Classic implements GeneralRules {
 
     public void initCards(List<DominoCard> deck){
         for (int i = 6; i >= 0; i--){

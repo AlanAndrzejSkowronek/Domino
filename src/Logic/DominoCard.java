@@ -18,23 +18,23 @@ public class DominoCard {
         return new int[]{num1, num2};
     }
 
-    public void printCard(DominoCard externalCard){
-        if (externalCard.getCard()[0] == externalCard.getCard()[1])
-            printCardHorizontally(externalCard);
+    public void printCard(){
+        if (getCard()[0] == getCard()[1])
+            printCardHorizontally();
         else
-            printCardVertically(externalCard);
+            printCardVertically();
     }
 
-    private void printCardHorizontally(DominoCard externalCard){
+    private void printCardHorizontally(){
         System.out.println("  |---|---|");
-        System.out.println("  | " + externalCard.getCard()[0] + " | " + externalCard.getCard()[1] + " |");
+        System.out.println("  | " + getCard()[0] + " | " + getCard()[1] + " |");
         System.out.println("  |---|---|");
     }
-    private void printCardVertically(DominoCard externalCard){
+    private void printCardVertically(){
         System.out.println("    -----");
-        System.out.println("    | " + externalCard.getCard()[0] + " |");
+        System.out.println("    | " + getCard()[0] + " |");
         System.out.println("    -----");
-        System.out.println("    | " + externalCard.getCard()[1] + " |");
+        System.out.println("    | " + getCard()[1] + " |");
         System.out.println("    -----");
     }
 }

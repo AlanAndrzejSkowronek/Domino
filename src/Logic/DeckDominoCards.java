@@ -13,9 +13,6 @@ public class DeckDominoCards extends Classic implements printDeck{
         initCards(deckCards);
         randomizeDeck(deckCards);
     }
-    public List<DominoCard> getDeckCards() {
-        return deckCards;
-    }
 
     private void randomizeDeck(List<DominoCard> deck){
         Collections.shuffle(deck);
@@ -23,7 +20,7 @@ public class DeckDominoCards extends Classic implements printDeck{
 
     public void printActualCards(){
         for (DominoCard deckCard : deckCards) {
-            deckCard.printCard(deckCard);
+            deckCard.printCard();
         }
     }
 

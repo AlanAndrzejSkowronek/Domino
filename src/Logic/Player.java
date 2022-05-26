@@ -24,4 +24,14 @@ public class Player {
     public List<DominoCard> getHand(){
         return hand;
     }
+
+    //TODO: COMPROBANTE DE SI SE PUEDE AÑADIR CARTA AHÍ.
+    public void addCardToGame(List<DominoCard> cardsGame, DominoCard card, boolean pickedRight){
+        if (pickedRight)
+            cardsGame.add(card);
+        else
+            cardsGame.add(0, card);
+
+        hand.remove(card);
+    }
 }

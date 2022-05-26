@@ -10,13 +10,10 @@ public class CardsInGame implements printDeck {
     public CardsInGame(){
         cardsGame = new ArrayList<>();
     }
-    public List<DominoCard> getCardsGame() {
-        return cardsGame;
-    }
 
     public void printActualCards(){
         for (DominoCard card : cardsGame){
-            card.printCard(card);
+            card.printCard();
         }
     }
 }
