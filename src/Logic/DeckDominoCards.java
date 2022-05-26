@@ -10,4 +10,7 @@ public class DeckDominoCards {
     public DeckDominoCards(){
         deckCards = new ArrayList<>();
     }
+    public List<DominoCard> getDeckCards() {
+        return deckCards;
+    }
 }

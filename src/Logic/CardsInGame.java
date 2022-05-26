@@ -10,4 +10,7 @@ public class CardsInGame {
     public CardsInGame(){
         cardsGame = new ArrayList<>();
     }
+    public List<DominoCard> getCardsGame() {
+        return cardsGame;
+    }
 }
