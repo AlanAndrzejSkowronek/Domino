@@ -18,23 +18,22 @@ public class DominoCard {
         return new int[]{num1, num2};
     }
 
-    public void printCard(){
-        if (getCard()[0] == getCard()[1])
-            printCardHorizontally();
-        else
-            printCardVertically();
+    public boolean printCard(){
+        return getCard()[0] == getCard()[1] ? printCardHorizontally() : printCardVertically();
     }
 
-    private void printCardHorizontally(){
+    private boolean printCardHorizontally(){
         System.out.println("  |---|---|");
         System.out.println("  | " + getCard()[0] + " | " + getCard()[1] + " |");
         System.out.println("  |---|---|");
+        return true;
     }
-    private void printCardVertically(){
+    private boolean printCardVertically(){
         System.out.println("    -----");
         System.out.println("    | " + getCard()[0] + " |");
         System.out.println("    -----");
         System.out.println("    | " + getCard()[1] + " |");
         System.out.println("    -----");
+        return true;
     }
 }

@@ -10,10 +10,11 @@ public class Game {
 
 
     //TODO
-    public void initcartas(){
+    public void givecards(){
         deck.giveCardsToPlayer(p, 7);
     }
-    public void robarpozo(){
+    //TODO
+    public void stealdeck(){
         deck.giveCardsToPlayer(p, 1);
         // comprobar si puede tirar ficha
     }

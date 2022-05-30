@@ -3,14 +3,16 @@ package Logic;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import Rules.Classic;
+import Rules.*;
 
-public class DeckDominoCards extends Classic implements printDeck{
+public class DeckDominoCards implements printDeck{
     private List<DominoCard> deckCards;
-
+    private Rules r;
     public DeckDominoCards(){
+        r = new Classic(); // PRUEBAS
         deckCards = new ArrayList<>();
-        initCards(deckCards);
+        r.initCards(deckCards);
+        // r.nada();
         randomizeDeck(deckCards);
     }
 
