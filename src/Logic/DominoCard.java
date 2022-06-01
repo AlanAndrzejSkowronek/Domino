@@ -22,6 +22,10 @@ public class DominoCard {
         return getCard()[0] == getCard()[1] ? printCardHorizontally() : printCardVertically();
     }
 
+    public void printMinimalCard(){
+        System.out.print("{ " + getCard()[0] + ", " + getCard()[1] + " } ");
+    }
+
     private boolean printCardHorizontally(){
         System.out.println("  |---|---|");
         System.out.println("  | " + getCard()[0] + " | " + getCard()[1] + " |");

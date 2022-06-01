@@ -34,4 +34,9 @@ public class Player {
 
         hand.remove(card);
     }
+    public void showHand(){
+        for (DominoCard dominoCard : hand) {
+            dominoCard.printMinimalCard();
+        }
+    }
 }

@@ -1,6 +1,8 @@
 package InOutUser;
 
 import Rules.*;
+
+import java.util.List;
 import java.util.Scanner;
 import Logic.Player;
 
@@ -15,7 +17,7 @@ public class InOutUser {
 
         System.out.println("Please, pick the rules you want to use in this game from this list:");
         System.out.println("    - Classic");
-        System.out.print("Pick one writing the name:");
+        System.out.print("Pick one writing the name: ");
         do {
             if (read.next().equalsIgnoreCase("classic")){
                 return new Classic();
@@ -38,15 +40,15 @@ public class InOutUser {
         return numberOfPlayers;
     }
 
-    private void createPlayerObjects(int numberOfPlayers){
+    public void createPlayerObjects(int numberOfPlayers, List<Player> pl){
         if (numberOfPlayers == 1){
             System.out.print("Now, pick a name for your player: ");
-            p = new Player(read.next());
+            pl.add(createInstanceOfPlayer(read.next()));
         } else {
             System.out.println("Now, all of you pick the name's of your players: ");
             for (int i = 1; i <= numberOfPlayers; i++){
                 System.out.print("Player " + i + " pick a name, please: ");
-                p = new Player(read.next());
+                pl.add(createInstanceOfPlayer(read.next()));
             }
         }
     }
@@ -62,5 +64,9 @@ public class InOutUser {
                 return true;
 
         return false;
+    }
+
+    private Player createInstanceOfPlayer(String name){
+        return new Player(name);
     }
 }
