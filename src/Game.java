@@ -23,7 +23,7 @@ public class Game {
         inp.createPlayerObjects(numberOfPlayers, listOfPlayers);
 
         for (Player playerInGame : listOfPlayers) {
-            givecards(playerInGame);
+            giveCards(playerInGame);
             System.out.println("------------------- " + playerInGame.getName() + " hand ---------------------------------------------");
             playerInGame.showHand();
             System.out.println();
@@ -32,14 +32,15 @@ public class Game {
         deck.printActualCards();
     }
 
-
-    //TODO
-    public void givecards(Player p){
+    //TODO Generalizarlo para las normas, no todas reparten 7 fichas
+    public void giveCards(Player p){
         deck.giveCardsToPlayer(p, 7);
     }
     //TODO
-    public void stealdeck(){
+    public void stealDeck(){
         deck.giveCardsToPlayer(p, 1);
-        // comprobar si puede tirar ficha
+        // comprobar si puede tirar esta ficha robada
     }
+
+    // metodo de si puede tirar ficha
 }

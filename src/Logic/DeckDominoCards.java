@@ -25,7 +25,7 @@ public class DeckDominoCards implements printDeck {
 
     public void printActualCards(){
         for (DominoCard deckCard : deckCards) {
-            deckCard.printCard();
+            deckCard.printMinimalCard();
         }
     }
 
