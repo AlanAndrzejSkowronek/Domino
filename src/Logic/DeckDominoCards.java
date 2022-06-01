@@ -5,17 +5,20 @@ import java.util.Collections;
 import java.util.List;
 import Rules.*;
 
-public class DeckDominoCards implements printDeck{
+public class DeckDominoCards implements printDeck {
     private List<DominoCard> deckCards;
-    private Rules r;
-    public DeckDominoCards(){
-        r = new Classic(); // PRUEBAS
+    private Rules rules;
+    private int numberOfCardsInDeck;
+    public DeckDominoCards(Rules r){
+        rules = r; // PRUEBAS
         deckCards = new ArrayList<>();
-        r.initCards(deckCards);
-        // r.nada();
+        numberOfCardsInDeck = r.initCards(deckCards);
         randomizeDeck(deckCards);
     }
 
+    public int getNumberOfCardsInDeck(){
+        return this.numberOfCardsInDeck;
+    }
     private void randomizeDeck(List<DominoCard> deck){
         Collections.shuffle(deck);
     }

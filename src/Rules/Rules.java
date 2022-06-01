@@ -6,5 +6,5 @@ import java.util.List;
 
 public abstract class Rules {
 
-    public abstract void initCards(List<DominoCard> deck);
+    public abstract int initCards(List<DominoCard> deck);
 }

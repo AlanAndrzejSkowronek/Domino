@@ -1,3 +1,4 @@
+import InOutUser.InOutUser;
 import Logic.CardsInGame;
 import Logic.DeckDominoCards;
 import Logic.Player;
@@ -5,8 +6,14 @@ import Logic.Player;
 public class Game {
 
     private Player p = new Player("el moha");
-    private DeckDominoCards deck = new DeckDominoCards();
+    private DeckDominoCards deck;
     private CardsInGame cardsGame = new CardsInGame();
+    private InOutUser inp = new InOutUser();
+
+    public void playGame(){
+        inp.startGameMessage();
+        deck = new DeckDominoCards(inp.pickRules());
+    }
 
 
     //TODO
