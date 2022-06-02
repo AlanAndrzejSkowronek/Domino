@@ -44,18 +44,18 @@ public class Game {
     }
 
     private void showPlayableCards(Player pl, List<DominoCard> cardsGame){
-        for (int i = 0; i < pl.getHand().size() - 1; i++)
+        for (int i = 0; i < pl.getHandSize(); i++)
             pl.showOneCardFromHand(i, verifyPlayableCard(pl, cardsGame, i));
     }
 
-    private boolean verifyPlayableCard(Player pl, List<DominoCard> cardsGame, int index){
+    private boolean verifyPlayableCard(Player pl, List<DominoCard> cardsGame, int indexHand){
         int firstGamePos = cardsGame.get(0).getCard()[0];
         int lastGamePos = cardsGame.get(cardsGame.size() - 1).getCard()[1];
 
-        if (pl.getHand().get(index).getCard()[0] == firstGamePos
-                || pl.getHand().get(index).getCard()[0] == lastGamePos
-                || pl.getHand().get(index).getCard()[1] == firstGamePos
-                || pl.getHand().get(index).getCard()[1] == lastGamePos)
+        if (pl.getCardFromHand(indexHand, 0) == firstGamePos
+                || pl.getCardFromHand(indexHand, 0) == lastGamePos
+                || pl.getCardFromHand(indexHand, 1) == firstGamePos
+                || pl.getCardFromHand(indexHand, 1) == lastGamePos)
             return true;
 
         return false;

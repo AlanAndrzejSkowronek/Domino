@@ -1,6 +1,7 @@
 package Rules;
 
 import Logic.DominoCard;
+import Logic.Player;
 
 import java.util.List;
 
@@ -17,7 +18,7 @@ public class Classic extends Rules {
         return numberOfCardsCreated;
     }
 
-    public void firstMove(){
+    public void firstMove(List<Player> listPlayers){
 
     }
 }

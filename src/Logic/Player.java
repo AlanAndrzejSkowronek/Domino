@@ -27,6 +27,17 @@ public class Player {
         return hand;
     }
 
+    public int getCardFromHand(int indexHand, int indexCard){
+        return hand.get(indexHand).getCard()[indexCard];
+    }
+    public int getHandSize(){
+        return (hand.size() - 1);
+    }
+    public void addToHand(DominoCard card){
+        hand.add(card);
+        hand.sort(DominoCard::compareTo);
+    }
+
     //TODO: TIRAR FICHA
     public void addCardToGame(List<DominoCard> cardsGame, DominoCard card){
             cardsGame.add(card);
@@ -42,6 +53,6 @@ public class Player {
     }
 
     public void showOneCardFromHand(int index, boolean canBePlayed){
-        getHand().get(index).printMinimalCard(canBePlayed);
+        hand.get(index).printMinimalCard(canBePlayed);
     }
 }

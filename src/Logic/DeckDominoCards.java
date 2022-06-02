@@ -32,7 +32,7 @@ public class DeckDominoCards implements printDeck {
     public void giveCardsToPlayer(Player p, int numOfCards){
         int cardsGiven = 0;
         while (cardsGiven < numOfCards){
-            p.getHand().add(deckCards.get(0));
+            p.addToHand(deckCards.get(0));
             deckCards.remove(0);
 
             cardsGiven++;

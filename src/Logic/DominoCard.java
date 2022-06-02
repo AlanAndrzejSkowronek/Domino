@@ -3,7 +3,7 @@ package Logic;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DominoCard {
+public class DominoCard implements Comparable<DominoCard> {
 
     private int num1, num2;
 
@@ -50,4 +50,16 @@ public class DominoCard {
     }
 
 
+    @Override
+    public int compareTo(DominoCard dc) {
+        // 1 x>y, 0 x==y, -1 x<y
+
+        if (getCard()[0] > dc.getCard()[0] && getCard()[1] > dc.getCard()[1])
+            return 1;
+
+        if (getCard()[0] == dc.getCard()[0] && getCard()[1] == dc.getCard()[1])
+            return 0;
+
+        return -1;
+    }
 }
