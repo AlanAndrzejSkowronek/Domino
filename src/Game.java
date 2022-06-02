@@ -1,6 +1,7 @@
 import InOutUser.InOutUser;
 import Logic.CardsInGame;
 import Logic.DeckDominoCards;
+import Logic.DominoCard;
 import Logic.Player;
 
 import java.util.ArrayList;
@@ -42,5 +43,21 @@ public class Game {
         // comprobar si puede tirar esta ficha robada
     }
 
-    // metodo de si puede tirar ficha
+    private void showPlayableCards(Player pl, List<DominoCard> cardsGame){
+        for (int i = 0; i < pl.getHand().size() - 1; i++)
+            pl.showOneCardFromHand(i, verifyPlayableCard(pl, cardsGame, i));
+    }
+
+    private boolean verifyPlayableCard(Player pl, List<DominoCard> cardsGame, int index){
+        int firstGamePos = cardsGame.get(0).getCard()[0];
+        int lastGamePos = cardsGame.get(cardsGame.size() - 1).getCard()[1];
+
+        if (pl.getHand().get(index).getCard()[0] == firstGamePos
+                || pl.getHand().get(index).getCard()[0] == lastGamePos
+                || pl.getHand().get(index).getCard()[1] == firstGamePos
+                || pl.getHand().get(index).getCard()[1] == lastGamePos)
+            return true;
+
+        return false;
+    }
 }

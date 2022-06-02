@@ -7,6 +7,8 @@ public class Player {
 
     private String name;
     private List<DominoCard> hand;
+    private CardsInGame cardsGame;
+    private DominoCard card;
 
     public Player (String name){
         setName(name);
@@ -25,18 +27,21 @@ public class Player {
         return hand;
     }
 
-    //TODO: COMPROBANTE DE SI SE PUEDE AÑADIR CARTA AHÍ.
-    public void addCardToGame(List<DominoCard> cardsGame, DominoCard card, boolean pickedRight){
-        if (pickedRight)
+    //TODO: TIRAR FICHA
+    public void addCardToGame(List<DominoCard> cardsGame, DominoCard card){
             cardsGame.add(card);
-        else
             cardsGame.add(0, card);
 
         hand.remove(card);
     }
+
     public void showHand(){
         for (DominoCard dominoCard : hand) {
-            dominoCard.printMinimalCard();
+            dominoCard.printMinimalCard(false);
         }
+    }
+
+    public void showOneCardFromHand(int index, boolean canBePlayed){
+        getHand().get(index).printMinimalCard(canBePlayed);
     }
 }

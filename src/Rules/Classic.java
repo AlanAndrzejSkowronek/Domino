@@ -16,4 +16,8 @@ public class Classic extends Rules {
         }
         return numberOfCardsCreated;
     }
+
+    public void firstMove(){
+
+    }
 }

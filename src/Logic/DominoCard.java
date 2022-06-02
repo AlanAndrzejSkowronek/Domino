@@ -22,10 +22,18 @@ public class DominoCard {
         return getCard()[0] == getCard()[1] ? printCardHorizontally() : printCardVertically();
     }
 
-    public void printMinimalCard(){
-        System.out.print("{ " + getCard()[0] + ", " + getCard()[1] + " } ");
+    public void printMinimalCard(boolean canBePlayed){
+        if (canBePlayed)
+            System.out.print("¡{ " + getCard()[0] + ", " + getCard()[1] + " }! ");
+        else
+            System.out.print("{ " + getCard()[0] + ", " + getCard()[1] + " } ");
     }
 
+    public void invertCard(DominoCard card){
+        int temp = card.getCard()[0];
+        card.getCard()[0] = card.getCard()[1];
+        card.getCard()[1] = temp;
+    }
     private boolean printCardHorizontally(){
         System.out.println("  |---|---|");
         System.out.println("  | " + getCard()[0] + " | " + getCard()[1] + " |");
@@ -40,4 +48,6 @@ public class DominoCard {
         System.out.println("    -----");
         return true;
     }
+
+
 }
