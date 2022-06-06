@@ -67,6 +67,6 @@ public class DominoCard implements Comparable<DominoCard> {
             return 1;
         }
 
-        return 0;
+        return -1;
     }
 }

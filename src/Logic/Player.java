@@ -1,6 +1,7 @@
 package Logic;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class Player {
@@ -23,10 +24,6 @@ public class Player {
         this.name = name;
     }
 
-    public List<DominoCard> getHand(){
-        return hand;
-    }
-
     public int getCardFromHand(int indexHand, int indexCard){
         return hand.get(indexHand).getCard()[indexCard];
     }
@@ -36,6 +33,11 @@ public class Player {
     public void addToHand(DominoCard card){
         hand.add(card);
         hand.sort(DominoCard::compareTo);
+        hand.sort(Collections.reverseOrder());
+    }
+
+    public void getMaxCard(){
+
     }
 
     //TODO: TIRAR FICHA
