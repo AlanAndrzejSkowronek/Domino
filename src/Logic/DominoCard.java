@@ -29,10 +29,10 @@ public class DominoCard implements Comparable<DominoCard> {
             System.out.print("{ " + getCard()[0] + ", " + getCard()[1] + " } ");
     }
 
-    public void invertCard(DominoCard card){
-        int temp = card.getCard()[0];
-        card.getCard()[0] = card.getCard()[1];
-        card.getCard()[1] = temp;
+    public void invertCard(){
+        int temp = getCard()[0];
+        getCard()[0] = getCard()[1];
+        getCard()[1] = temp;
     }
     private boolean printCardHorizontally(){
         System.out.println("  |---|---|");
@@ -52,14 +52,21 @@ public class DominoCard implements Comparable<DominoCard> {
 
     @Override
     public int compareTo(DominoCard dc) {
-        // 1 x>y, 0 x==y, -1 x<y
 
-        if (getCard()[0] > dc.getCard()[0] && getCard()[1] > dc.getCard()[1])
+        invertCard();
+        dc.invertCard();
+
+        if (getCard()[0] == dc.getCard()[0]){
+            if (getCard()[1] > dc.getCard()[1]) {
+                return 1;
+            }
+            return -1;
+        }
+
+        if (getCard()[0] > dc.getCard()[0]){
             return 1;
+        }
 
-        if (getCard()[0] == dc.getCard()[0] && getCard()[1] == dc.getCard()[1])
-            return 0;
-
-        return -1;
+        return 0;
     }
 }
