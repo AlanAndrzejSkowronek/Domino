@@ -41,17 +41,19 @@ public class Player {
 
                                                                 // FALSE = IZQUIERDA, TRUE = DERECHA
     public void addCardToGame(List<DominoCard> cardsGame, DominoCard card, boolean pos){
-        if (pos)
-            cardsGame.add((cardsGame.size() - 1), card);
-        else
-            cardsGame.add(0, card);
+
+        int place = ( pos ) ? (cardsGame.size() - 1) : 0 ;
+        cardsGame.add(place, card);
 
         hand.remove(card);
     }
 
-    public void showHand(){
+    public void showHand(boolean printMinimalCards){
         for (DominoCard dominoCard : hand) {
-            dominoCard.printMinimalCard(false);
+            if (printMinimalCards)
+                dominoCard.printMinimalCard(false);
+            else
+                dominoCard.printCard();
         }
     }
 

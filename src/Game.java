@@ -21,27 +21,8 @@ public class Game {
         inp.startGameMessage();
         deck = new DeckDominoCards(inp.pickRules());
 
-        numberOfPlayers = inp.pickNumberOfPlayers();
-        inp.createPlayerObjects(numberOfPlayers, listOfPlayers);
-
-        for (Player playerInGame : listOfPlayers) {
-            giveCards(playerInGame);
-            System.out.println("------------------- " + playerInGame.getName() + " hand ---------------------------------------------");
-            playerInGame.showHand();
-            System.out.println();
-        }
-        System.out.println("------------------- deck ---------------------------------------------");
-        deck.printActualCards();
-        System.out.println();
+        initPlayersAndGiveCards(listOfPlayers);
         firstMove(listOfPlayers, cardsGame.getCardsInGame());
-
-        System.out.println("----------------- CARDS PLAYEDDD ------------------------------");
-        cardsGame.printActualCards();
-        for (Player playerInGame : listOfPlayers) {
-            System.out.println("------------------- " + playerInGame.getName() + " hand NEW ---------------------------------------------");
-            playerInGame.showHand();
-            System.out.println();
-        }
 
     }
 
@@ -49,15 +30,33 @@ public class Game {
     public void giveCards(Player p){
         deck.giveCardsToPlayer(p, 7);
     }
-    //TODO
-    public void stealDeck(){
-        deck.giveCardsToPlayer(p, 1);
-        // comprobar si puede tirar esta ficha robada
+    public void tryToStealFromDeck(Player p){
+        if (deck.isEmpty()) return;
+
+        do {
+            deck.giveCardsToPlayer(p, 1);
+        } while(!deck.isEmpty() || !verifyPlayableCard(p, cardsGame.getCardsInGame(), p.getHandSize()));
     }
 
     private void showPlayableCards(Player pl, List<DominoCard> cardsGame){
         for (int i = 0; i < pl.getHandSize(); i++)
             pl.showOneCardFromHand(i, verifyPlayableCard(pl, cardsGame, i));
+    }
+
+    private void initPlayersAndGiveCards(List<Player> players){
+        numberOfPlayers = inp.pickNumberOfPlayers();
+        inp.createPlayerObjects(numberOfPlayers, listOfPlayers);
+
+        for (Player playerInGame : players){
+            giveCards(playerInGame);
+        }
+    }
+
+    private void printPlayerHands(List<Player> players){
+        for (Player playerInGame : players){
+            System.out.println(" - - - - - - - - - - - - " + playerInGame.getName() + " Hand - - - - - - - - - - - - ");
+            playerInGame.showHand(true);
+        }
     }
 
     private boolean verifyPlayableCard(Player pl, List<DominoCard> cardsGame, int indexHand){

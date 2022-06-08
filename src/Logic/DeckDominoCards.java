@@ -23,6 +23,10 @@ public class DeckDominoCards implements printDeck {
         Collections.shuffle(deck);
     }
 
+    public boolean isEmpty(){
+        return deckCards.isEmpty();
+    }
+
     public void printActualCards(){
         for (DominoCard deckCard : deckCards) {
             deckCard.printMinimalCard(false);
