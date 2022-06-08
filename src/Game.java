@@ -13,13 +13,15 @@ public class Game {
     private Player p;
     private DeckDominoCards deck;
     private CardsInGame cardsGame = new CardsInGame();
+    private Rules r;
     private InOutUser inp = new InOutUser();
     private List<Player> listOfPlayers = new ArrayList<>();
     private int numberOfPlayers;
 
     public void playGame(){
         inp.startGameMessage();
-        deck = new DeckDominoCards(inp.pickRules());
+        r = inp.pickRules();
+        deck = new DeckDominoCards(r);
 
         initPlayersAndGiveCards(listOfPlayers);
         firstMove(listOfPlayers, cardsGame.getCardsInGame());

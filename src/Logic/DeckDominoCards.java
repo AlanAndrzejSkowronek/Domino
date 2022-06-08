@@ -7,10 +7,9 @@ import Rules.*;
 
 public class DeckDominoCards implements printDeck {
     private List<DominoCard> deckCards;
-    private Rules rules;
+    private Rules r;
     private int numberOfCardsInDeck;
     public DeckDominoCards(Rules r){
-        rules = r; // PRUEBAS
         deckCards = new ArrayList<>();
         numberOfCardsInDeck = r.initCards(deckCards);
         randomizeDeck(deckCards);
