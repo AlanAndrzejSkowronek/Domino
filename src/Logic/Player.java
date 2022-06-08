@@ -6,10 +6,9 @@ import java.util.List;
 
 public class Player {
 
+    //TODO equipos y puntuacion generalizada.
     private String name;
     private List<DominoCard> hand;
-    private CardsInGame cardsGame;
-    private DominoCard card;
 
     public Player (String name){
         setName(name);
@@ -36,13 +35,15 @@ public class Player {
         hand.sort(Collections.reverseOrder());
     }
 
-    public void getMaxCard(){
-
+    public DominoCard getMaxCard(){
+        return hand.get(0);
     }
 
-    //TODO: TIRAR FICHA
-    public void addCardToGame(List<DominoCard> cardsGame, DominoCard card){
-            cardsGame.add(card);
+                                                                // FALSE = IZQUIERDA, TRUE = DERECHA
+    public void addCardToGame(List<DominoCard> cardsGame, DominoCard card, boolean pos){
+        if (pos)
+            cardsGame.add((cardsGame.size() - 1), card);
+        else
             cardsGame.add(0, card);
 
         hand.remove(card);

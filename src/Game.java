@@ -3,6 +3,7 @@ import Logic.CardsInGame;
 import Logic.DeckDominoCards;
 import Logic.DominoCard;
 import Logic.Player;
+import Rules.Rules;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,17 @@ public class Game {
         }
         System.out.println("------------------- deck ---------------------------------------------");
         deck.printActualCards();
+        System.out.println();
+        firstMove(listOfPlayers, cardsGame.getCardsInGame());
+
+        System.out.println("----------------- CARDS PLAYEDDD ------------------------------");
+        cardsGame.printActualCards();
+        for (Player playerInGame : listOfPlayers) {
+            System.out.println("------------------- " + playerInGame.getName() + " hand NEW ---------------------------------------------");
+            playerInGame.showHand();
+            System.out.println();
+        }
+
     }
 
     //TODO Generalizarlo para las normas, no todas reparten 7 fichas
@@ -58,6 +70,23 @@ public class Game {
                 || pl.getCardFromHand(indexHand, 1) == lastGamePos)
             return true;
 
+        return false;
+    }
+
+    public boolean firstMove(List<Player> listPlayers, List<DominoCard> cardsGame){
+        Player ref = null;
+
+        for (int i = 0; i < (listPlayers.size() - 1); i ++){
+            ref = listPlayers.get(i);
+            if (listPlayers.get(i + 1).getMaxCard().compareTo(listPlayers.get(i).getMaxCard()) > 0){
+                ref = listPlayers.get(i + 1);
+            }
+        }
+
+        if (ref != null) {
+            ref.addCardToGame(cardsGame, ref.getMaxCard(), false);
+            return true;
+        }
         return false;
     }
 }

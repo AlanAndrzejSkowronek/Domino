@@ -1,5 +1,6 @@
 package Rules;
 
+import Logic.CardsInGame;
 import Logic.DominoCard;
 import Logic.Player;
 
@@ -16,9 +17,5 @@ public class Classic extends Rules {
             }
         }
         return numberOfCardsCreated;
-    }
-
-    public void firstMove(List<Player> listPlayers){
-        //TODO: Pillar la primera ficha del jugador y el jugador para que la tire a cardsInGame en game y poder empezar la partida.
     }
 }

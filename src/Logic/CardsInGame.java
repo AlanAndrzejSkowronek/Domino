@@ -5,7 +5,7 @@ import java.util.List;
 
 public class CardsInGame implements printDeck {
 
-    private List<DominoCard> cardsGame;
+    List<DominoCard> cardsGame;
 
     public CardsInGame(){
         cardsGame = new ArrayList<>();
@@ -15,5 +15,9 @@ public class CardsInGame implements printDeck {
         for (DominoCard card : cardsGame){
             card.printCard();
         }
+    }
+
+    public List<DominoCard> getCardsInGame(){
+        return cardsGame;
     }
 }

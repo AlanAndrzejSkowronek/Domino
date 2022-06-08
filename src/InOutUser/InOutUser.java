@@ -10,7 +10,6 @@ public class InOutUser {
 
     private final Scanner read = new Scanner (System.in);
     private final String[] rulesList = {"classic"};
-    private Player p;
 
 
     public Rules pickRules(){
