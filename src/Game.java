@@ -25,7 +25,8 @@ public class Game {
 
         initPlayersAndGiveCards(listOfPlayers);
         firstMove(listOfPlayers, cardsGame.getCardsInGame());
-
+        printPlayerHands(listOfPlayers);
+        cardsGame.printActualCards();
     }
 
     //TODO Generalizarlo para las normas, no todas reparten 7 fichas
@@ -58,6 +59,7 @@ public class Game {
         for (Player playerInGame : players){
             System.out.println(" - - - - - - - - - - - - " + playerInGame.getName() + " Hand - - - - - - - - - - - - ");
             playerInGame.showHand(true);
+            System.out.println();
         }
     }
 

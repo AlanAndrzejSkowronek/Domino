@@ -12,9 +12,11 @@ public class CardsInGame implements printDeck {
     }
 
     public void printActualCards(){
+        System.out.println(" - - - - - - - - - - - - Cards Played - - - - - - - - - - - - ");
         for (DominoCard card : cardsGame){
             card.printCard();
         }
+        System.out.println(" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ");
     }
 
     public List<DominoCard> getCardsInGame(){

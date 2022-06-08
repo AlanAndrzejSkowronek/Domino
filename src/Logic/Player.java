@@ -10,10 +10,33 @@ public class Player {
     private String name;
     private List<DominoCard> hand;
 
-    public Player (String name){
+    private Team team;
+
+    public Player (String name, Team t){
         setName(name);
         hand = new ArrayList<>();
+        team = t;
     }
+
+    /*
+        if(juggenEquip)
+            team1 = new team()
+            team2 = new team()
+            player0, player2 (team1), player1(team2) player3(team2)
+            team1(jugador0,jugador2) team2(jugador1,jugador3)
+         // dentro de equip --> afegirjugadors((jugador...jugador)
+         else
+            for(){
+                team = new team()
+                player(name, team)
+                team.afegirjugador(player)
+
+
+        new teams () 4
+        (t1) (t2)
+        (t3) (t4)
+
+     */
 
     public String getName(){
         return name;
