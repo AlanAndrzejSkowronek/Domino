@@ -10,11 +10,14 @@ public class Team {
     private List<Player> team;
     private int teamID;
     private int points;
-    private static InOutUser inp;
 
     public Team(int p){
         team = new ArrayList<>();
         points = p;
+    }
+
+    public void getPlayerOfTeam(int idx){
+        team.get(idx);
     }
 
     public void addPlayer(Player pl){

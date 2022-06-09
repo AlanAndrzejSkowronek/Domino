@@ -10,13 +10,6 @@ public class Player {
     private List<DominoCard> hand;
 
     private Team team;
-
-    public Player (String name, Team t){
-        setName(name);
-        hand = new ArrayList<>();
-        team = t;
-    }
-
     public Player (String name){
         setName(name);
         hand = new ArrayList<>();
@@ -77,5 +70,26 @@ public class Player {
 
     public void showOneCardFromHand(int index, boolean canBePlayed){
         hand.get(index).printMinimalCard(canBePlayed);
+    }
+
+    public boolean verifyPlayableCard(List<DominoCard> cardsGame, int indexHand){
+        int firstGamePos = cardsGame.get(0).getCard()[0];
+        int lastGamePos = cardsGame.get(cardsGame.size() - 1).getCard()[1];
+
+        return getCardFromHand(indexHand, 0) == firstGamePos
+                || getCardFromHand(indexHand, 0) == lastGamePos
+                || getCardFromHand(indexHand, 1) == firstGamePos
+                || getCardFromHand(indexHand, 1) == lastGamePos;
+    }
+
+    public int showPlayableCards(List<DominoCard> cardsGame){
+        int playableCards = 0;
+
+        for (int i = 0; i < getHandSize(); i++){
+            showOneCardFromHand(i, verifyPlayableCard(cardsGame, i));
+            if (verifyPlayableCard(cardsGame, i))
+                playableCards++;
+        }
+        return playableCards;
     }
 }

@@ -1,5 +1,6 @@
 package InOutUser;
 
+import Logic.DominoCard;
 import Rules.*;
 
 import java.util.List;
@@ -39,6 +40,21 @@ public class InOutUser {
         return numberOfPlayers;
     }
 
+    public int whatCardToPlay(Player pl, List<DominoCard> cardsGame){
+        int cardToPlay = 0;
+        do {
+            System.out.println("What card do you want to play?: ");
+            pl.showPlayableCards(cardsGame);
+
+            cardToPlay = (read.nextInt() + 1);
+
+            if (!verifyRangeOfHand(pl, cardToPlay)){
+                System.out.println("Introduce the number of the card in your hand!");
+            }
+        } while(!verifyRangeOfHand(pl, cardToPlay));
+        return (cardToPlay - 1);
+    }
+
     public void createPlayerObjects(int numberOfPlayers, List<Player> pl){
         if (numberOfPlayers == 1){
             System.out.print("Now, pick a name for your player: ");
@@ -64,6 +80,10 @@ public class InOutUser {
     public void startGameMessage(){
         System.out.println("Welcome to the famous Domino Game!");
         System.out.println("Have fun!");
+    }
+
+    private boolean verifyRangeOfHand(Player pl, int cardToPlay){
+        return cardToPlay >= 0 && cardToPlay < pl.getHandSize();
     }
 
     private boolean verifyInputOfRules(){

@@ -15,6 +15,7 @@ public class Game {
     private static Team t;
     private List<Player> listOfPlayers = new ArrayList<>();
     private int numberOfPlayers;
+    private int turn = 0;
 
     public void playGame(){
         inp.startGameMessage();
@@ -22,19 +23,20 @@ public class Game {
         deck = new DeckDominoCards(r);
 
         initPlayersAndGiveCards(listOfPlayers);
-        firstMove(listOfPlayers, cardsGame.getCardsInGame());
-        printPlayerHands(listOfPlayers);
-        cardsGame.printActualCards();
         createTeams(listOfPlayers);
-
-        System.out.println(listOfPlayers.get(0).getTeam().getTeamID());
-        System.out.println(listOfPlayers.get(1).getTeam().getTeamID());
-        System.out.println(listOfPlayers.get(2).getTeam().getTeamID());
-        System.out.println(listOfPlayers.get(3).getTeam().getTeamID());
+        firstMove(listOfPlayers, cardsGame.getCardsInGame());
 
         do  {
+            if(turn == 4)
+                turn = 0;
 
-        } while(true);
+            if (listOfPlayers.get(turn).showPlayableCards(cardsGame.getCardsInGame()) <= 0)
+                tryToStealFromDeck(listOfPlayers.get(turn));
+            else
+                inp.whatCardToPlay(listOfPlayers.get(turn), cardsGame.getCardsInGame());
+
+
+        } while(!isWinner(listOfPlayers));
     }
     public void giveCards(Player p){
         deck.giveCardsToPlayer(p, 7);
@@ -44,7 +46,7 @@ public class Game {
 
         do {
             deck.giveCardsToPlayer(p, 1);
-        } while(!deck.isEmpty() || !verifyPlayableCard(p, cardsGame.getCardsInGame(), p.getHandSize()));
+        } while(!deck.isEmpty() || !p.verifyPlayableCard(cardsGame.getCardsInGame(), p.getHandSize()));
     }
 
     public boolean firstMove(List<Player> listPlayers, List<DominoCard> cardsGame){
@@ -64,11 +66,6 @@ public class Game {
         return false;
     }
 
-    private void showPlayableCards(Player pl, List<DominoCard> cardsGame){
-        for (int i = 0; i < pl.getHandSize(); i++)
-            pl.showOneCardFromHand(i, verifyPlayableCard(pl, cardsGame, i));
-    }
-
     private void initPlayersAndGiveCards(List<Player> players){
         numberOfPlayers = inp.pickNumberOfPlayers();
         inp.createPlayerObjects(numberOfPlayers, listOfPlayers);
@@ -78,25 +75,12 @@ public class Game {
         }
     }
 
-    private void printPlayerHands(List<Player> players){
-        for (Player playerInGame : players){
+    private void printPlayerHands(List<Player> players) {
+        for (Player playerInGame : players) {
             System.out.println(" - - - - - - - - - - - - " + playerInGame.getName() + " Hand - - - - - - - - - - - - ");
             playerInGame.showHand(true);
             System.out.println();
         }
-    }
-
-    private boolean verifyPlayableCard(Player pl, List<DominoCard> cardsGame, int indexHand){
-        int firstGamePos = cardsGame.get(0).getCard()[0];
-        int lastGamePos = cardsGame.get(cardsGame.size() - 1).getCard()[1];
-
-        if (pl.getCardFromHand(indexHand, 0) == firstGamePos
-                || pl.getCardFromHand(indexHand, 0) == lastGamePos
-                || pl.getCardFromHand(indexHand, 1) == firstGamePos
-                || pl.getCardFromHand(indexHand, 1) == lastGamePos)
-            return true;
-
-        return false;
     }
 
     private void createTeams(List<Player> players){
