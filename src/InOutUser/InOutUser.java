@@ -42,11 +42,11 @@ public class InOutUser {
 
     public int whatCardToPlay(Player pl, List<DominoCard> cardsGame){
         int cardToPlay = 0;
+        System.out.println();
         do {
             System.out.println("What card do you want to play?: ");
-            pl.showPlayableCards(cardsGame);
 
-            cardToPlay = (read.nextInt() + 1);
+            cardToPlay = read.nextInt();
 
             if (!verifyRangeOfHand(pl, cardToPlay)){
                 System.out.println("Introduce the number of the card in your hand!");

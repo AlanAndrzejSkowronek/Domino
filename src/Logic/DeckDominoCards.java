@@ -7,7 +7,6 @@ import Rules.*;
 
 public class DeckDominoCards implements printDeck {
     private List<DominoCard> deckCards;
-    private Rules r;
     private int numberOfCardsInDeck;
     public DeckDominoCards(Rules r){
         deckCards = new ArrayList<>();

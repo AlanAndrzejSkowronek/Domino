@@ -1,7 +1,6 @@
 import InOutUser.InOutUser;
 import Logic.*;
 import Rules.Rules;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,19 +22,23 @@ public class Game {
         deck = new DeckDominoCards(r);
 
         initPlayersAndGiveCards(listOfPlayers);
-        createTeams(listOfPlayers);
         firstMove(listOfPlayers, cardsGame.getCardsInGame());
+        createTeams(listOfPlayers);
 
         do  {
-            if(turn == 4)
+            if(turn > (listOfPlayers.size() - 1))
                 turn = 0;
 
+            cardsGame.printActualCards();
+            deck.printActualCards();
+            System.out.println();
+            System.out.println("Player " + listOfPlayers.get(turn).getName() + ", your turn!");
             if (listOfPlayers.get(turn).showPlayableCards(cardsGame.getCardsInGame()) <= 0)
                 tryToStealFromDeck(listOfPlayers.get(turn));
             else
-                inp.whatCardToPlay(listOfPlayers.get(turn), cardsGame.getCardsInGame());
+                listOfPlayers.get(turn).addCardToExistingGame(cardsGame.getCardsInGame(), listOfPlayers.get(turn).getCardFromHand(inp.whatCardToPlay(listOfPlayers.get(turn), cardsGame.getCardsInGame())));
 
-
+            turn++;
         } while(!isWinner(listOfPlayers));
     }
     public void giveCards(Player p){
@@ -44,9 +47,9 @@ public class Game {
     public void tryToStealFromDeck(Player p){
         if (deck.isEmpty()) return;
 
-        do {
+        while (!deck.isEmpty() || !p.verifyPlayableCard(cardsGame.getCardsInGame(), p.getHandSize())) {
             deck.giveCardsToPlayer(p, 1);
-        } while(!deck.isEmpty() || !p.verifyPlayableCard(cardsGame.getCardsInGame(), p.getHandSize()));
+        }
     }
 
     public boolean firstMove(List<Player> listPlayers, List<DominoCard> cardsGame){
@@ -60,7 +63,7 @@ public class Game {
         }
 
         if (ref != null) {
-            ref.addCardToGame(cardsGame, ref.getMaxCard(), false);
+            ref.addFirstCard(cardsGame, ref.getMaxCard());
             return true;
         }
         return false;

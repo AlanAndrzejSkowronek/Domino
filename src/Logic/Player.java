@@ -34,6 +34,7 @@ public class Player {
     public int getCardFromHand(int indexHand, int indexCard){
         return hand.get(indexHand).getCard()[indexCard];
     }
+    public DominoCard getCardFromHand(int indexHand){return hand.get(indexHand);}
     public boolean isPlayerHandEmpty(){
         return hand.isEmpty();
     }
@@ -50,11 +51,25 @@ public class Player {
         return hand.get(0);
     }
 
-                                                                // FALSE = IZQUIERDA, TRUE = DERECHA
-    public void addCardToGame(List<DominoCard> cardsGame, DominoCard card, boolean pos){
+    public void addFirstCard(List<DominoCard> cardsGame, DominoCard card){
+        cardsGame.add(0, card);
+        hand.remove(card);
+    }
 
-        int place = ( pos ) ? (cardsGame.size() - 1) : 0 ;
-        cardsGame.add(place, card);
+    public void addCardToExistingGame(List<DominoCard> cardsGame, DominoCard card){
+        int firstGamePos = cardsGame.get(0).getCard()[0];
+        int lastGamePos = cardsGame.get(cardsGame.size() - 1).getCard()[1];
+
+        if (verifyLeftPlayable(hand.indexOf(card), firstGamePos))
+            cardsGame.add(0, card);
+
+        if (verifyRightPlayable(hand.indexOf(card), lastGamePos))
+            cardsGame.add((cardsGame.size() - 1), card);
+
+        if (!verifyPlayableCard(cardsGame, hand.indexOf(card))){
+            System.out.println("Esta carta no es jugable!");
+            return;
+        }
 
         hand.remove(card);
     }
@@ -76,9 +91,17 @@ public class Player {
         int firstGamePos = cardsGame.get(0).getCard()[0];
         int lastGamePos = cardsGame.get(cardsGame.size() - 1).getCard()[1];
 
+        return verifyLeftPlayable(indexHand, firstGamePos)
+                || verifyRightPlayable(indexHand, lastGamePos);
+    }
+
+    public boolean verifyLeftPlayable(int indexHand, int firstGamePos){
         return getCardFromHand(indexHand, 0) == firstGamePos
-                || getCardFromHand(indexHand, 0) == lastGamePos
-                || getCardFromHand(indexHand, 1) == firstGamePos
+                || getCardFromHand(indexHand, 1) == firstGamePos;
+    }
+
+    public boolean verifyRightPlayable(int indexHand, int lastGamePos){
+        return getCardFromHand(indexHand, 0) == lastGamePos
                 || getCardFromHand(indexHand, 1) == lastGamePos;
     }
 
