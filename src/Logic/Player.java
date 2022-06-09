@@ -6,7 +6,6 @@ import java.util.List;
 
 public class Player {
 
-    //TODO equipos y puntuacion generalizada.
     private String name;
     private List<DominoCard> hand;
 
@@ -18,25 +17,10 @@ public class Player {
         team = t;
     }
 
-    /*
-        if(juggenEquip)
-            team1 = new team()
-            team2 = new team()
-            player0, player2 (team1), player1(team2) player3(team2)
-            team1(jugador0,jugador2) team2(jugador1,jugador3)
-         // dentro de equip --> afegirjugadors((jugador...jugador)
-         else
-            for(){
-                team = new team()
-                player(name, team)
-                team.afegirjugador(player)
-
-
-        new teams () 4
-        (t1) (t2)
-        (t3) (t4)
-
-     */
+    public Player (String name){
+        setName(name);
+        hand = new ArrayList<>();
+    }
 
     public String getName(){
         return name;
@@ -44,6 +28,14 @@ public class Player {
 
     public void setName(String name){
         this.name = name;
+    }
+
+    public Team getTeam(){
+        return team;
+    }
+
+    public void setTeam(Team t){
+        this.team = t;
     }
 
     public int getCardFromHand(int indexHand, int indexCard){

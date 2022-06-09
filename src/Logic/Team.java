@@ -12,4 +12,8 @@ public class Team {
         team = new ArrayList<>();
         points = p;
     }
+
+    public void addPlayer(Player pl){
+        this.team.add(pl);
+    }
 }

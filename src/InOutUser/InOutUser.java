@@ -52,6 +52,15 @@ public class InOutUser {
         }
     }
 
+    public boolean wantToPlayInTeams(){
+        String elec;
+        System.out.println("Want to play in teams of 2?:");
+        System.out.print("YES [Y] or NO [N]: ");
+        elec = read.next();
+
+        return elec.equalsIgnoreCase("y");
+    }
+
     public void startGameMessage(){
         System.out.println("Welcome to the famous Domino Game!");
         System.out.println("Have fun!");

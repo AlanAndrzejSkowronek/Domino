@@ -1,8 +1,5 @@
 import InOutUser.InOutUser;
-import Logic.CardsInGame;
-import Logic.DeckDominoCards;
-import Logic.DominoCard;
-import Logic.Player;
+import Logic.*;
 import Rules.Rules;
 
 import java.util.ArrayList;
@@ -27,9 +24,12 @@ public class Game {
         firstMove(listOfPlayers, cardsGame.getCardsInGame());
         printPlayerHands(listOfPlayers);
         cardsGame.printActualCards();
-    }
+        createTeamsAndAssignThem(listOfPlayers);
 
-    //TODO Generalizarlo para las normas, no todas reparten 7 fichas
+        do  {
+
+        } while(true/* condiciones == un jugador se quede sin mano (GANARÁ EL EQUIPO), un equipo llegue a los puntos máximos (GANARÁN)*/);
+    }
     public void giveCards(Player p){
         deck.giveCardsToPlayer(p, 7);
     }
@@ -39,6 +39,23 @@ public class Game {
         do {
             deck.giveCardsToPlayer(p, 1);
         } while(!deck.isEmpty() || !verifyPlayableCard(p, cardsGame.getCardsInGame(), p.getHandSize()));
+    }
+
+    public boolean firstMove(List<Player> listPlayers, List<DominoCard> cardsGame){
+        Player ref = null;
+
+        for (int i = 0; i < (listPlayers.size() - 1); i ++){
+            ref = listPlayers.get(i);
+            if (listPlayers.get(i + 1).getMaxCard().compareTo(listPlayers.get(i).getMaxCard()) > 0){
+                ref = listPlayers.get(i + 1);
+            }
+        }
+
+        if (ref != null) {
+            ref.addCardToGame(cardsGame, ref.getMaxCard(), false);
+            return true;
+        }
+        return false;
     }
 
     private void showPlayableCards(Player pl, List<DominoCard> cardsGame){
@@ -76,20 +93,26 @@ public class Game {
         return false;
     }
 
-    public boolean firstMove(List<Player> listPlayers, List<DominoCard> cardsGame){
-        Player ref = null;
+    private void createTeamsAndAssignThem(List<Player> players){
 
-        for (int i = 0; i < (listPlayers.size() - 1); i ++){
-            ref = listPlayers.get(i);
-            if (listPlayers.get(i + 1).getMaxCard().compareTo(listPlayers.get(i).getMaxCard()) > 0){
-                ref = listPlayers.get(i + 1);
+        if (inp.wantToPlayInTeams()){
+            Team t1 = new Team(0);
+            Team t2 = new Team(0);
+            for (int i = 0; i < players.size(); i++) {
+                if (i == 1 || i == 3){
+                    players.get(i).setTeam(t1);
+                    t1.addPlayer(players.get(i));
+                } else {
+                    players.get(i).setTeam(t2);
+                    t2.addPlayer(players.get(i));
+                }
+            }
+        } else {
+            for (int i = 0; i < players.size(); i++){
+                Team t = new Team(0);
+                players.get(i).setTeam(t);
+                t.addPlayer(players.get(i));
             }
         }
-
-        if (ref != null) {
-            ref.addCardToGame(cardsGame, ref.getMaxCard(), false);
-            return true;
-        }
-        return false;
     }
 }
