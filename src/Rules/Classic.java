@@ -8,6 +8,7 @@ import java.util.List;
 
 public class Classic extends Rules {
 
+    int max_points = 120;
     public int initCards(List<DominoCard> deck){
         int numberOfCardsCreated = 0;
         for (int i = 6; i >= 0; i--){
@@ -17,5 +18,10 @@ public class Classic extends Rules {
             }
         }
         return numberOfCardsCreated;
+    }
+
+    @Override
+    public int getMax_points() {
+        return max_points;
     }
 }

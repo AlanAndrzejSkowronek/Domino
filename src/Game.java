@@ -12,6 +12,7 @@ public class Game {
     private CardsInGame cardsGame = new CardsInGame();
     private Rules r;
     private InOutUser inp = new InOutUser();
+    private static Team t;
     private List<Player> listOfPlayers = new ArrayList<>();
     private int numberOfPlayers;
 
@@ -24,11 +25,16 @@ public class Game {
         firstMove(listOfPlayers, cardsGame.getCardsInGame());
         printPlayerHands(listOfPlayers);
         cardsGame.printActualCards();
-        createTeamsAndAssignThem(listOfPlayers);
+        createTeams(listOfPlayers);
+
+        System.out.println(listOfPlayers.get(0).getTeam().getTeamID());
+        System.out.println(listOfPlayers.get(1).getTeam().getTeamID());
+        System.out.println(listOfPlayers.get(2).getTeam().getTeamID());
+        System.out.println(listOfPlayers.get(3).getTeam().getTeamID());
 
         do  {
 
-        } while(true/* condiciones == un jugador se quede sin mano (GANARÁ EL EQUIPO), un equipo llegue a los puntos máximos (GANARÁN)*/);
+        } while(true);
     }
     public void giveCards(Player p){
         deck.giveCardsToPlayer(p, 7);
@@ -93,26 +99,33 @@ public class Game {
         return false;
     }
 
-    private void createTeamsAndAssignThem(List<Player> players){
+    private void createTeams(List<Player> players){
+        if (inp.wantToPlayInTeams())
+            t.create2Teams(players);
+        else
+            t.createUniqueTeams(players);
+    }
 
-        if (inp.wantToPlayInTeams()){
-            Team t1 = new Team(0);
-            Team t2 = new Team(0);
-            for (int i = 0; i < players.size(); i++) {
-                if (i == 1 || i == 3){
-                    players.get(i).setTeam(t1);
-                    t1.addPlayer(players.get(i));
-                } else {
-                    players.get(i).setTeam(t2);
-                    t2.addPlayer(players.get(i));
-                }
+    /*
+        condiciones == un jugador se quede sin mano (GANARÁ EL EQUIPO), un equipo llegue a los puntos máximos (GANARÁN)
+
+        ESTO PASARÁ A NORMAS
+    */
+
+    private boolean isWinner(List<Player> players){
+
+        for (Player pl : players){
+            if (pl.isPlayerHandEmpty()){
+                System.out.println("Team nº" + pl.getTeam().getTeamID() + " won because of " + pl.getName() + "!!!");
+                return true;
             }
-        } else {
-            for (int i = 0; i < players.size(); i++){
-                Team t = new Team(0);
-                players.get(i).setTeam(t);
-                t.addPlayer(players.get(i));
+
+            if (pl.getTeam().getPoints() >= r.getMax_points()){
+                System.out.println("Team nº" + pl.getTeam().getTeamID() + " won because they reached the maximum points needed!!!");
+                return true;
             }
         }
+
+        return false;
     }
 }

@@ -41,6 +41,9 @@ public class Player {
     public int getCardFromHand(int indexHand, int indexCard){
         return hand.get(indexHand).getCard()[indexCard];
     }
+    public boolean isPlayerHandEmpty(){
+        return hand.isEmpty();
+    }
     public int getHandSize(){
         return (hand.size() - 1);
     }
