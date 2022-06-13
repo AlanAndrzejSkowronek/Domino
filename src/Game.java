@@ -32,15 +32,18 @@ public class Game {
             deck.printActualCards();
             System.out.println();
             System.out.println("Player " + listOfPlayers.get(turn).getName() + ", your turn!");
-            if (listOfPlayers.get(turn).showPlayableCards(cardsGame.getCardsInGame()) <= 0)
+
+            if (listOfPlayers.get(turn).showPlayableCards(cardsGame.getCardsInGame()) <= 0){
+                System.out.println("No tienes cartas para jugar! Robas...");
                 tryToStealFromDeck(listOfPlayers.get(turn));
-            else
+            } else {
                 listOfPlayers.get(turn)
                         .addCardToExistingGame(cardsGame.getCardsInGame(), listOfPlayers.get(turn)
                         .getCardFromHand(inp.whatCardToPlay(listOfPlayers.get(turn))));
+            }
 
             turn++;
-        } while(!isWinner(listOfPlayers));
+        } while(!isFinal(listOfPlayers));
     }
     public void giveCards(Player p){
         deck.giveCardsToPlayer(p, 7);
@@ -117,13 +120,26 @@ public class Game {
                 System.out.println("Team nº" + pl.getTeam().getTeamID() + " won because of " + pl.getName() + "!!!");
                 return true;
             }
-
+            /*
             if (pl.getTeam().getPoints() >= r.getMax_points()){
                 System.out.println("Team nº" + pl.getTeam().getTeamID() + " won because they reached the maximum points needed!!!");
                 return true;
-            }
+            }*/
         }
-
         return false;
+    }
+
+    public boolean isFinal(List<Player> players){
+        return isWinner(players) ||  isLockedGame(players);
+    }
+
+    public boolean isLockedGame(List<Player> players){
+        if (!deck.isEmpty()) return false; // falta ,mirar dobles
+
+        for (Player pl2 : players)
+                    if (pl2.verifyPlayableCards(cardsGame.getCardsInGame()))
+                        return false;
+
+        return true;
     }
 }

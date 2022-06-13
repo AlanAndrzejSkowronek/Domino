@@ -88,9 +88,9 @@ public class Player {
 
     public boolean verifyPlayableCards(List<DominoCard> cardsGame){
         for (int i = 0; i < getHandSize(); i++){
-            verifyPlayableCard(cardsGame, i);
+            if(verifyPlayableCard(cardsGame, i))
+                return true;
         }
-        showPlayableCards(cardsGame);
         return false;
     }
 
