@@ -39,7 +39,7 @@ public class Player {
         return hand.isEmpty();
     }
     public int getHandSize(){
-        return (hand.size() - 1);
+        return hand.size();
     }
     public void addToHand(DominoCard card){
         hand.add(card);
@@ -62,9 +62,8 @@ public class Player {
 
         if (verifyLeftPlayable(hand.indexOf(card), firstGamePos))
             cardsGame.add(0, card);
-
-        if (verifyRightPlayable(hand.indexOf(card), lastGamePos))
-            cardsGame.add((cardsGame.size() - 1), card);
+        else if (verifyRightPlayable(hand.indexOf(card), lastGamePos))
+            cardsGame.add(card);
 
         if (!verifyPlayableCard(cardsGame, hand.indexOf(card))){
             System.out.println("Esta carta no es jugable!");
@@ -85,6 +84,14 @@ public class Player {
 
     public void showOneCardFromHand(int index, boolean canBePlayed){
         hand.get(index).printMinimalCard(canBePlayed);
+    }
+
+    public boolean verifyPlayableCards(List<DominoCard> cardsGame){
+        for (int i = 0; i < getHandSize(); i++){
+            verifyPlayableCard(cardsGame, i);
+        }
+        showPlayableCards(cardsGame);
+        return false;
     }
 
     public boolean verifyPlayableCard(List<DominoCard> cardsGame, int indexHand){

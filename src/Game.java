@@ -11,7 +11,6 @@ public class Game {
     private CardsInGame cardsGame = new CardsInGame();
     private Rules r;
     private InOutUser inp = new InOutUser();
-    private static Team t;
     private List<Player> listOfPlayers = new ArrayList<>();
     private int numberOfPlayers;
     private int turn = 0;
@@ -36,7 +35,9 @@ public class Game {
             if (listOfPlayers.get(turn).showPlayableCards(cardsGame.getCardsInGame()) <= 0)
                 tryToStealFromDeck(listOfPlayers.get(turn));
             else
-                listOfPlayers.get(turn).addCardToExistingGame(cardsGame.getCardsInGame(), listOfPlayers.get(turn).getCardFromHand(inp.whatCardToPlay(listOfPlayers.get(turn), cardsGame.getCardsInGame())));
+                listOfPlayers.get(turn)
+                        .addCardToExistingGame(cardsGame.getCardsInGame(), listOfPlayers.get(turn)
+                        .getCardFromHand(inp.whatCardToPlay(listOfPlayers.get(turn))));
 
             turn++;
         } while(!isWinner(listOfPlayers));
@@ -47,9 +48,12 @@ public class Game {
     public void tryToStealFromDeck(Player p){
         if (deck.isEmpty()) return;
 
-        while (!deck.isEmpty() || !p.verifyPlayableCard(cardsGame.getCardsInGame(), p.getHandSize())) {
+        do{
             deck.giveCardsToPlayer(p, 1);
-        }
+
+            if (!p.verifyPlayableCards(cardsGame.getCardsInGame())) return;
+
+        } while (!deck.isEmpty());
     }
 
     public boolean firstMove(List<Player> listPlayers, List<DominoCard> cardsGame){
@@ -88,13 +92,20 @@ public class Game {
 
     private void createTeams(List<Player> players){
         if (inp.wantToPlayInTeams())
-            t.create2Teams(players);
+            Team.create2Teams(players);
         else
-            t.createUniqueTeams(players);
+            Team.createUniqueTeams(players);
     }
 
     /*
-        condiciones == un jugador se quede sin mano (GANARÁ EL EQUIPO), un equipo llegue a los puntos máximos (GANARÁN)
+        condiciones
+        ==
+        un jugador se quede sin mano (GANARÁ EL EQUIPO),
+        que los jugadores no puedan tirar ni robar en una pasada.
+
+        Cada ronda acabada, se añaden los puntos.
+
+        LA PARTIDA ACABA CUANDO SE LLEGA A MAX_POINTS
 
         ESTO PASARÁ A NORMAS
     */

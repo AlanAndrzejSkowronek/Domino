@@ -40,19 +40,19 @@ public class InOutUser {
         return numberOfPlayers;
     }
 
-    public int whatCardToPlay(Player pl, List<DominoCard> cardsGame){
+    public int whatCardToPlay(Player pl){
         int cardToPlay = 0;
         System.out.println();
         do {
             System.out.println("What card do you want to play?: ");
 
-            cardToPlay = read.nextInt();
+            cardToPlay = (read.nextInt() - 1);
 
             if (!verifyRangeOfHand(pl, cardToPlay)){
                 System.out.println("Introduce the number of the card in your hand!");
             }
         } while(!verifyRangeOfHand(pl, cardToPlay));
-        return (cardToPlay - 1);
+        return cardToPlay;
     }
 
     public void createPlayerObjects(int numberOfPlayers, List<Player> pl){
