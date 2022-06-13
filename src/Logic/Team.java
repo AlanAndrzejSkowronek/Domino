@@ -1,7 +1,5 @@
 package Logic;
 
-import InOutUser.InOutUser;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,8 +14,8 @@ public class Team {
         points = p;
     }
 
-    public void getPlayerOfTeam(int idx){
-        team.get(idx);
+    public Player getPlayerOfTeam(int idx){
+        return team.get(idx);
     }
 
     public void addPlayer(Player pl){

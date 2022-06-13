@@ -19,7 +19,21 @@ public class CardsInGame implements printDeck {
         System.out.println(" - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - ");
     }
 
-    public List<DominoCard> getCardsInGame(){
-        return cardsGame;
+    public int getFirstGamePos(){
+        return cardsGame.get(0).getCard()[0];
     }
+
+    public int getLastGamePos(){
+        return cardsGame.get(cardsGame.size() - 1).getCard()[1];
+    }
+
+    public void addCardToGame(int idx, DominoCard card){
+        cardsGame.add(idx, card);
+    }
+
+    public void addCardToGame(DominoCard card){
+        cardsGame.add(card);
+    }
+
+    public void clearCardsInGame(){ cardsGame.clear(); }
 }

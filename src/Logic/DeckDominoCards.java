@@ -25,6 +25,8 @@ public class DeckDominoCards implements printDeck {
         return deckCards.isEmpty();
     }
 
+    public void clearDeck(){ deckCards.clear(); }
+
     public void printActualCards(){
         for (DominoCard deckCard : deckCards) {
             deckCard.printMinimalCard(false);
