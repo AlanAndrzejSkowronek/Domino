@@ -12,8 +12,6 @@ public class DominoCard implements Comparable<DominoCard> {
         this.num2 = num2;
     }
 
-    // public DominoCard(){} // Only testing
-
     public int[] getCard(){
         return new int[]{num1, num2};
     }
@@ -24,15 +22,15 @@ public class DominoCard implements Comparable<DominoCard> {
 
     public void printMinimalCard(boolean canBePlayed){
         if (canBePlayed)
-            System.out.print("¡{ " + getCard()[0] + ", " + getCard()[1] + " }! ");
+            System.out.print("!{ " + getCard()[0] + ", " + getCard()[1] + " }! ");
         else
             System.out.print("{ " + getCard()[0] + ", " + getCard()[1] + " } ");
     }
 
     public void invertCard(){
-        int temp = getCard()[0];
-        getCard()[0] = getCard()[1];
-        getCard()[1] = temp;
+        int temp = num1;
+        num1 = num2;
+        num2 = temp;
     }
     private boolean printCardHorizontally(){
         System.out.println("  |---|---|");

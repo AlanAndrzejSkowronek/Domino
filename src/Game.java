@@ -55,14 +55,16 @@ public class Game {
 
             cardsGame.printActualCards();
             deck.printActualCards();
+
             System.out.println();
             System.out.println("Player " + listOfPlayers.get(turn).getName() + ", your turn!");
+            System.out.println();
 
             if (showPlayableCards(listOfPlayers.get(turn)) <= 0){
                 System.out.println("No tienes cartas para jugar! Robas...");
                 tryToStealFromDeck(listOfPlayers.get(turn));
             } else {
-                isCardFromPlayerPlayable(listOfPlayers.get(turn).getCardFromHand(inp.whatCardToPlay(listOfPlayers.get(turn))), listOfPlayers.get(turn));
+                isCardFromPlayerPlayable(listOfPlayers.get(turn));
             }
 
             turn++;
@@ -108,22 +110,32 @@ public class Game {
         do{
             deck.giveCardsToPlayer(p, 1);
 
-            if (verifyPlayableCards(p)) return;
+            if (verifyPlayableCard((p.getHandSize() - 1), p)){
+                cardsGame.addCardToGame(p.getCardFromHand(p.getHandSize() - 1));
+                return;
+            }
 
         } while (!deck.isEmpty());
     }
 
-    public void isCardFromPlayerPlayable(DominoCard card, Player p){
+    public void isCardFromPlayerPlayable(Player p) {
 
-        if (verifyPosPlayable(p.getIndexOfCard(card), cardsGame.getFirstGamePos(), p))
-            cardsGame.addCardToGame(0, card);
-        else if (verifyPosPlayable(p.getIndexOfCard(card), cardsGame.getLastGamePos(), p))
-            cardsGame.addCardToGame(card);
-
-        if (!verifyPlayableCard(p.getIndexOfCard(card), p)){
-            System.out.println("Esta carta no es jugable!");
-            return;
-        }
+        DominoCard card;
+        do {
+            card = p.getCardFromHand(inp.whatCardToPlay(listOfPlayers.get(turn)));
+            if (verifyPosPlayable(p.getIndexOfCard(card), cardsGame.getFirstGamePos(), p)){
+                if (card.getCard()[1] != cardsGame.getFirstGamePos()){
+                    card.invertCard();
+                }
+                cardsGame.addCardToGame(0, card);
+            }
+            else if (verifyPosPlayable(p.getIndexOfCard(card), cardsGame.getLastGamePos(), p)){
+                if (card.getCard()[0] != cardsGame.getLastGamePos()){
+                    card.invertCard();
+                }
+                cardsGame.addCardToGame(card);
+            }
+        } while (!verifyPlayableCard(p.getIndexOfCard(card), p));
 
         p.removeCardFromHand(card);
     }
@@ -162,19 +174,25 @@ public class Game {
 
     public boolean firstMove(List<Player> listPlayers){
         Player ref = null;
-
+        shuffleHandsOfPlayers(listPlayers);
         for (int i = 0; i < (listPlayers.size() - 1); i ++){
             ref = listPlayers.get(i);
             if (listPlayers.get(i + 1).getMaxCard().compareTo(listPlayers.get(i).getMaxCard()) > 0){
                 ref = listPlayers.get(i + 1);
             }
         }
-
+        turn = listPlayers.indexOf(ref);
         if (ref != null) {
             cardsGame.addCardToGame(ref.returnFirstCard());
             return true;
         }
         return false;
+    }
+
+    public void shuffleHandsOfPlayers(List<Player> players){
+        for (Player p : players){
+            p.shuffleHand();
+        }
     }
 
     private void initPlayersAndGiveCards(List<Player> players){
@@ -215,6 +233,7 @@ public class Game {
                     if (verifyPlayableCards(pl2))
                         return false;
 
+        System.out.println("The game is closed! No more moves!");
         return true;
     }
 

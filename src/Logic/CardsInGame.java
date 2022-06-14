@@ -27,6 +27,10 @@ public class CardsInGame implements printDeck {
         return cardsGame.get(cardsGame.size() - 1).getCard()[1];
     }
 
+    public int getCardsGameSize(){
+        return cardsGame.size();
+    }
+
     public void addCardToGame(int idx, DominoCard card){
         cardsGame.add(idx, card);
     }

@@ -49,6 +49,8 @@ public class Player {
     public void removeCardFromHand(DominoCard card){ hand.remove(card); }
     public void addToHand(DominoCard card){
         hand.add(card);
+    }
+    public void shuffleHand(){
         hand.sort(DominoCard::compareTo);
         hand.sort(Collections.reverseOrder());
     }
@@ -63,14 +65,6 @@ public class Player {
         DominoCard card = getMaxCard();
         hand.remove(card);
         return card;
-    }
-    public void showHand(boolean printMinimalCards){
-        for (DominoCard dominoCard : hand) {
-            if (printMinimalCards)
-                dominoCard.printMinimalCard(false);
-            else
-                dominoCard.printCard();
-        }
     }
 
     public void showOneCardFromHand(int index, boolean canBePlayed){
