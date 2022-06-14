@@ -1,8 +1,5 @@
 package Logic;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class DominoCard implements Comparable<DominoCard> {
 
     private int num1, num2;

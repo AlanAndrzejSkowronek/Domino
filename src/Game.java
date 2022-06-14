@@ -26,6 +26,7 @@ public class Game {
             System.out.println("Round " + roundNum + ", let it start!");
             playRound();
             roundNum++;
+            turn++;
             clearGame(listOfPlayers);
             initGame(listOfPlayers);
         } while(!gotMaxPoints(listOfPlayers));
@@ -70,13 +71,7 @@ public class Game {
             turn++;
         } while(!isFinal(listOfPlayers));
 
-        givePointsToTeams(listOfPlayers);
-    }
-
-    public void givePointsToTeams(List<Player> players){
-        for (Player pl : players){
-            pl.addPointsToTeam(playerTotalPointsAtRound(pl));
-        }
+        r.givePointsToTeams(listOfPlayers);
     }
 
     public void showTeamPoints(List<Player> players){
@@ -88,17 +83,6 @@ public class Game {
             System.out.println("Team " + players.get(0).getTeamID() + " has " + players.get(0).getPoints() +  " out of " + r.getMax_points() + " to win!");
             System.out.println("Team " + players.get(1).getTeamID() + " has " + players.get(1).getPoints() +  " out of " + r.getMax_points() + " to win!");
         }
-    }
-
-    public int playerTotalPointsAtRound(Player p){
-        int totalPoints = 0;
-
-        for (int i = 0; i < p.getHandSize(); i++){
-            totalPoints += p.getCardFromHand(i, 0);
-            totalPoints += p.getCardFromHand(i, 1);
-        }
-
-        return totalPoints;
     }
 
     public void giveCards(Player p){
