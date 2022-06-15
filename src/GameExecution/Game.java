@@ -1,6 +1,8 @@
+package GameExecution;
+
 import InOutUser.InOutUser;
 import Logic.*;
-import Rules.Rules;
+import Rules.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,7 +28,7 @@ public class Game {
             System.out.println("Round " + roundNum + ", let it start!");
             playRound();
             roundNum++;
-            turn++;
+            if (r instanceof Classic) turn = ((Classic) r).startNextPlayerTurn(turn);
             clearGame(listOfPlayers);
             initGame(listOfPlayers);
         } while(!gotMaxPoints(listOfPlayers));
@@ -49,6 +51,10 @@ public class Game {
         deck.clearDeck();
     }
 
+    public void giveCards(Player p){
+        deck.giveCardsToPlayer(p, 7);
+    }
+
     public void playRound(){
         do  {
             if(turn > (listOfPlayers.size() - 1))
@@ -61,15 +67,16 @@ public class Game {
             System.out.println("Player " + listOfPlayers.get(turn).getName() + ", your turn!");
             System.out.println();
 
-            if (showPlayableCards(listOfPlayers.get(turn)) <= 0){
-                System.out.println("No tienes cartas para jugar! Robas...");
+            if (countPlayableCards(listOfPlayers.get(turn)) <= 0){
+                System.out.println();
+                System.out.println("You don't have cards to use! Stealing...");
                 tryToStealFromDeck(listOfPlayers.get(turn));
             } else {
                 isCardFromPlayerPlayable(listOfPlayers.get(turn));
             }
 
             turn++;
-        } while(!isFinal(listOfPlayers));
+        } while(!isFinalizedRound(listOfPlayers));
 
         r.givePointsToTeams(listOfPlayers);
     }
@@ -84,10 +91,6 @@ public class Game {
             System.out.println("Team " + players.get(1).getTeamID() + " has " + players.get(1).getPoints() +  " out of " + r.getMax_points() + " to win!");
         }
     }
-
-    public void giveCards(Player p){
-        deck.giveCardsToPlayer(p, 7);
-    }
     public void tryToStealFromDeck(Player p){
         if (deck.isEmpty()) return;
 
@@ -95,7 +98,7 @@ public class Game {
             deck.giveCardsToPlayer(p, 1);
 
             if (verifyPlayableCard((p.getHandSize() - 1), p)){
-                cardsGame.addCardToGame(p.getCardFromHand(p.getHandSize() - 1));
+                isCardFromPlayerPlayable(p);
                 return;
             }
 
@@ -106,6 +109,7 @@ public class Game {
 
         DominoCard card;
         do {
+            showPlayableCards(listOfPlayers.get(turn));
             card = p.getCardFromHand(inp.whatCardToPlay(listOfPlayers.get(turn)));
             if (verifyPosPlayable(p.getIndexOfCard(card), cardsGame.getFirstGamePos(), p)){
                 if (card.getCard()[1] != cardsGame.getFirstGamePos()){
@@ -145,15 +149,20 @@ public class Game {
                 || p.getCardFromHand(indexHand, 1) == gamePos;
     }
 
-    public int showPlayableCards(Player p){
+    public int countPlayableCards(Player p){
         int playableCards = 0;
 
         for (int i = 0; i < p.getHandSize(); i++){
-            p.showOneCardFromHand(i, verifyPlayableCard(i, p));
             if (verifyPlayableCard(i, p))
                 playableCards++;
         }
         return playableCards;
+    }
+
+    public void showPlayableCards(Player p){
+        for (int i = 0; i < p.getHandSize(); i++){
+            p.showOneCardFromHand(i, verifyPlayableCard(i, p));
+        }
     }
 
     public boolean firstMove(List<Player> listPlayers){
@@ -195,30 +204,8 @@ public class Game {
             Team.createUniqueTeams(players);
     }
 
-    private boolean isWinner(List<Player> players){
-
-        for (Player pl : players){
-            if (pl.isPlayerHandEmpty()){
-                System.out.println("Team nº" + pl.getTeamID() + " won because of " + pl.getName() + "!!!");
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean isFinal(List<Player> players){
-        return isWinner(players) ||  isLockedGame(players);
-    }
-
-    public boolean isLockedGame(List<Player> players){
-        if (!deck.isEmpty()) return false;
-
-        for (Player pl2 : players)
-                    if (verifyPlayableCards(pl2))
-                        return false;
-
-        System.out.println("The game is closed! No more moves!");
-        return true;
+    public boolean isFinalizedRound(List<Player> players){
+        return r.isFinalizedRound(players, deck);
     }
 
     public boolean gotMaxPoints(List<Player> players) {

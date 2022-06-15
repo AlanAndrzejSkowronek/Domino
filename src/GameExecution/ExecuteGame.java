@@ -1,6 +1,4 @@
-import InOutUser.InOutUser;
-import Logic.DeckDominoCards;
-import Rules.Rules;
+package GameExecution;
 
 public class ExecuteGame {
 

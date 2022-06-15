@@ -1,13 +1,14 @@
 package Rules;
 
-import Logic.CardsInGame;
+import Logic.DeckDominoCards;
 import Logic.DominoCard;
 import Logic.Player;
-
 import java.util.List;
+import GameExecution.Game;
 
 public class Classic extends Rules {
 
+    private Game g;
     int max_points = 80;
     public int initCards(List<DominoCard> deck){
         int numberOfCardsCreated = 0;
@@ -20,17 +21,22 @@ public class Classic extends Rules {
         return numberOfCardsCreated;
     }
 
+    public int startNextPlayerTurn(int turn){
+        return (turn + 1);
+    }
+
+
     @Override
     public int getMax_points() {
         return max_points;
     }
-
+    @Override
     public void givePointsToTeams(List<Player> players){
         players
                 .get(searchPlayerWithMaxPoints(players))
                 .addPointsToTeam(calculateTotalPoints(players));
     }
-
+    @Override
     public int playerTotalPointsAtRound(Player p){
         int totalPoints = 0;
 
@@ -40,6 +46,33 @@ public class Classic extends Rules {
         }
 
         return totalPoints;
+    }
+
+    @Override
+    public boolean isFinalizedRound(List<Player> players, DeckDominoCards deck) {
+        return isWinner(players) ||  isLockedGame(players, deck);
+    }
+
+    private boolean isWinner(List<Player> players){
+
+        for (Player pl : players){
+            if (pl.isPlayerHandEmpty()){
+                System.out.println("Team nº" + pl.getTeamID() + " won because of " + pl.getName() + "!!!");
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isLockedGame(List<Player> players, DeckDominoCards deck){
+        if (!deck.isEmpty()) return false;
+
+        for (Player pl2 : players)
+            if (g.verifyPlayableCards(pl2))
+                return false;
+
+        System.out.println("The game is closed! No more moves!");
+        return true;
     }
 
     private int calculateTotalPoints(List<Player> players){

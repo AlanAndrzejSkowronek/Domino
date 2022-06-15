@@ -78,7 +78,7 @@ public class InOutUser {
     }
 
     public void startGameMessage(){
-        System.out.println("Welcome to the famous Domino Game!");
+        System.out.println("Welcome to the famous Domino GameExecution.Game!");
         System.out.println("Have fun!");
     }
 
