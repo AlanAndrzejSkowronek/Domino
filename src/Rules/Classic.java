@@ -59,11 +59,10 @@ public class Classic extends Rules {
     private int searchPlayerWithMaxPoints(List<Player> players){
         int playerWithMaxPoints = 0;
 
-        for (int i = 0; i < players.size() - 1; i++){
-            if (players.get(i + 1).getPoints() > players.get(i).getPoints()){
+        for (int i = 0; i < players.size() - 1; i++)
+            if (players.get(i + 1).getPoints() > players.get(i).getPoints())
                 playerWithMaxPoints = players.indexOf(players.get(i + 1));
-            }
-        }
+
         return playerWithMaxPoints;
     }
 }

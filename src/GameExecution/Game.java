@@ -246,14 +246,25 @@ public class Game {
     public boolean gotMaxPoints(List<Player> players) {
         for(Player pl : players){
             if (pl.getPoints() >= r.getMax_points()) {
-                if (r instanceof Latino || r instanceof Chileno)
+                if (r instanceof Latino || r instanceof Chileno){
                     System.out.println("Team nº" + pl.getTeamID() + " lost because they reached the maximum points!!!");
-                else
+                    System.out.println("Team nº" + getTeamWithLowerPoints(players) + " won the game!!!");
+                } else {
                     System.out.println("Team nº" + pl.getTeamID() + " won because they reached the maximum points needed!!!");
-
+                }
                 return true;
             }
         }
         return false;
+    }
+
+    private int getTeamWithLowerPoints(List<Player> players){
+        int teamWithLowerPoints = 0;
+
+        for (int i = 0; i < players.size() - 1; i++)
+            if (players.get(i + 1).getPoints() > players.get(i).getPoints())
+                teamWithLowerPoints = players.get(players.indexOf(players.get(i + 1))).getTeamID();
+
+        return teamWithLowerPoints;
     }
 }
