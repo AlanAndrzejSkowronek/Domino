@@ -30,19 +30,17 @@ public class Team {
         return points;
     }
 
-    public void setPoints(int p){
-        this.points = p;
-    }
-
     public void addPoints(int pAdded){
         this.points += pAdded;
     }
 
     public static void create2Teams(List<Player> players){
+
         Team t1 = new Team(0);
         t1.setTeamID(1);
         Team t2 = new Team(0);
         t2.setTeamID(2);
+
         for (int i = 0; i < players.size(); i++) {
             if (i == 1 || i == 3){
                 players.get(i).setTeam(t1);

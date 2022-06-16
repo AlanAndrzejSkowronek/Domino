@@ -32,6 +32,7 @@ public class Game {
             clearGame(listOfPlayers);
             initGame(listOfPlayers);
         } while(!gotMaxPoints(listOfPlayers));
+
         showTeamPoints(listOfPlayers);
     }
 
@@ -61,19 +62,13 @@ public class Game {
                 turn = 0;
 
             cardsGame.printActualCards();
-            deck.printActualCards();
+            // -> deck.printActualCards(); <- Only testing!
+            displayPlayerTurn(turn);
 
-            System.out.println();
-            System.out.println("Player " + listOfPlayers.get(turn).getName() + ", your turn!");
-            System.out.println();
-
-            if (countPlayableCards(listOfPlayers.get(turn)) <= 0){
-                System.out.println();
-                System.out.println("You don't have cards to use! Stealing...");
-                tryToStealFromDeck(listOfPlayers.get(turn));
-            } else {
+            if (countPlayableCards(listOfPlayers.get(turn)) <= 0)
+                displayStealingCards(turn);
+            else
                 isCardFromPlayerPlayable(listOfPlayers.get(turn));
-            }
 
             turn++;
         } while(!isFinalizedRound(listOfPlayers));
@@ -91,6 +86,7 @@ public class Game {
             System.out.println("Team " + players.get(1).getTeamID() + " has " + players.get(1).getPoints() +  " out of " + r.getMax_points() + " to win!");
         }
     }
+
     public void tryToStealFromDeck(Player p){
         if (deck.isEmpty()) return;
 
@@ -211,6 +207,18 @@ public class Game {
 
         System.out.println("The game is closed! No more moves!");
         return true;
+    }
+
+    private void displayPlayerTurn(int turn){
+        System.out.println();
+        System.out.println("Player " + listOfPlayers.get(turn).getName() + ", your turn!");
+        System.out.println();
+    }
+
+    private void displayStealingCards(int turn){
+        System.out.println();
+        System.out.println("You don't have cards to use! Stealing...");
+        tryToStealFromDeck(listOfPlayers.get(turn));
     }
 
     private void initPlayersAndGiveCards(List<Player> players){

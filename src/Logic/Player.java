@@ -38,18 +38,25 @@ public class Player {
     public int getCardFromHand(int indexHand, int indexCard){
         return hand.get(indexHand).getCard()[indexCard];
     }
+
     public DominoCard getCardFromHand(int indexHand){return hand.get(indexHand);}
+
     public int getIndexOfCard(DominoCard card){ return hand.indexOf(card); }
+
     public boolean isPlayerHandEmpty(){
         return hand.isEmpty();
     }
+
     public int getHandSize(){
         return hand.size();
     }
+
     public void removeCardFromHand(DominoCard card){ hand.remove(card); }
+
     public void addToHand(DominoCard card){
         hand.add(card);
     }
+
     public void shuffleHand(){
         hand.sort(DominoCard::compareTo);
         hand.sort(Collections.reverseOrder());

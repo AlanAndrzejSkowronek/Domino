@@ -14,9 +14,6 @@ public class DeckDominoCards implements printDeck {
         randomizeDeck(deckCards);
     }
 
-    public int getNumberOfCardsInDeck(){
-        return this.numberOfCardsInDeck;
-    }
     private void randomizeDeck(List<DominoCard> deck){
         Collections.shuffle(deck);
     }
