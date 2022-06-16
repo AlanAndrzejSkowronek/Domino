@@ -16,11 +16,20 @@ public class InOutUser {
     public Rules pickRules(){
 
         System.out.println("Please, pick the rules you want to use in this game from this list:");
-        System.out.println("    - Classic");
+        System.out.println("    - classic");
+        System.out.println("    - latino");
+        System.out.println("    - chileno");
         System.out.print("Pick one writing the name: ");
         do {
-            if (read.next().equalsIgnoreCase("classic")){
-                return new Classic();
+            switch(read.next()){
+                case "classic":
+                    return new Classic();
+                case "latino":
+                    return new Latino();
+                case "chileno":
+                    return new Chileno();
+                default:
+                    System.out.print("That type of rules doesn't exist! Try typing one from the list above: ");
             }
         } while (!verifyInputOfRules());
         return null;
@@ -55,10 +64,18 @@ public class InOutUser {
         return cardToPlay;
     }
 
-    public void createPlayerObjects(int numberOfPlayers, List<Player> pl){
+    public void createPlayerObjects(int numberOfPlayers, List<Player> pl, Rules r){
+        if (r instanceof Classic || r instanceof Chileno)
+            pickPlayers(numberOfPlayers, pl);
+
+        if (r instanceof Latino)
+            for (int i = 0; i < numberOfPlayers; i++)
+                pickName(pl);
+    }
+
+    private void pickPlayers(int numberOfPlayers, List<Player> pl){
         if (numberOfPlayers == 1){
-            System.out.print("Now, pick a name for your player: ");
-            pl.add(createInstanceOfPlayer(read.next()));
+            pickName(pl);
         } else {
             System.out.println("Now, all of you pick the name's of your players: ");
             for (int i = 1; i <= numberOfPlayers; i++){
@@ -66,6 +83,11 @@ public class InOutUser {
                 pl.add(createInstanceOfPlayer(read.next()));
             }
         }
+    }
+
+    private void pickName(List<Player> pl){
+        System.out.print("Now, pick a name for your player: ");
+        pl.add(createInstanceOfPlayer(read.next()));
     }
 
     public boolean wantToPlayInTeams(){

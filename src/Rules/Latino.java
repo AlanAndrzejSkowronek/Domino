@@ -1,16 +1,15 @@
 package Rules;
 
-import Logic.DeckDominoCards;
 import Logic.DominoCard;
 import Logic.Player;
 import java.util.List;
-import GameExecution.Game;
 
-public class Classic extends Rules {
+public class Latino extends Rules {
 
-    private final int max_points = 80;
+    private final int max_points = 200;
 
-    public int initCards(List<DominoCard> deck){
+    @Override
+    public int initCards(List<DominoCard> deck) {
         int numberOfCardsCreated = 0;
         for (int i = 6; i >= 0; i--){
             for (int j = 0; j <= i; j++){
@@ -21,21 +20,26 @@ public class Classic extends Rules {
         return numberOfCardsCreated;
     }
 
-    public int startNextPlayerTurn(int turn){
-        return (turn + 1);
-    }
-
-
     @Override
     public int getMax_points() {
         return max_points;
     }
+
     @Override
     public void givePointsToTeams(List<Player> players){
         players
                 .get(searchPlayerWithMaxPoints(players))
-                .addPointsToTeam(calculateTotalPoints(players));
+                .addPointsToTeam(
+                        playerTotalPointsAtRound(
+                                players.get(getTeammate(players, getTeamIdxPlayerMaxPoints(players)))));
+
+        players
+                .get(searchPlayerWithMaxPoints(players))
+                .addPointsToTeam(
+                        playerTotalPointsAtRound(
+                                players.get(searchPlayerWithMaxPoints(players))));
     }
+
     @Override
     public int playerTotalPointsAtRound(Player p){
         int totalPoints = 0;
@@ -48,12 +52,17 @@ public class Classic extends Rules {
         return totalPoints;
     }
 
-    private int calculateTotalPoints(List<Player> players){
-        int temp = 0;
-        for (Player pl : players){
-            temp += playerTotalPointsAtRound(pl);
+    private int getTeammate(List<Player> players, int teamIndex){
+        for (int i = 0; i < players.size(); i++){
+            if (teamIndex == players.get(i).getTeamID()){
+                return players.indexOf(players.get(i));
+            }
         }
-        return temp;
+        return -1;
+    }
+
+    private int getTeamIdxPlayerMaxPoints(List<Player> players){
+        return players.get(searchPlayerWithMaxPoints(players)).getTeamID();
     }
 
     private int searchPlayerWithMaxPoints(List<Player> players){

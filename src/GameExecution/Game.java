@@ -192,6 +192,9 @@ public class Game {
 
         for (Player pl : players){
             if (pl.isPlayerHandEmpty()){
+                if (r instanceof Latino)
+                    pl.addPointsToTeam(25);
+
                 System.out.println("Team nº" + pl.getTeamID() + " won because of " + pl.getName() + "!!!");
                 return true;
             }
@@ -211,8 +214,14 @@ public class Game {
     }
 
     private void initPlayersAndGiveCards(List<Player> players){
-        int numberOfPlayers = inp.pickNumberOfPlayers();
-        inp.createPlayerObjects(numberOfPlayers, listOfPlayers);
+        int numberOfPlayers = 0;
+        if (r instanceof Classic || r instanceof Chileno)
+            numberOfPlayers = inp.pickNumberOfPlayers();
+
+        if (r instanceof Latino)
+            numberOfPlayers = 4;
+
+        inp.createPlayerObjects(numberOfPlayers, listOfPlayers, r);
 
         for (Player playerInGame : players){
             giveCards(playerInGame);
@@ -220,10 +229,14 @@ public class Game {
     }
 
     private void createTeams(List<Player> players){
-        if (inp.wantToPlayInTeams())
+        if (r instanceof Latino)
             Team.create2Teams(players);
-        else
-            Team.createUniqueTeams(players);
+
+        if (r instanceof Classic || r instanceof Chileno)
+            if (inp.wantToPlayInTeams())
+                Team.create2Teams(players);
+            else
+                Team.createUniqueTeams(players);
     }
 
     public boolean isFinalizedRound(List<Player> players){
@@ -233,7 +246,11 @@ public class Game {
     public boolean gotMaxPoints(List<Player> players) {
         for(Player pl : players){
             if (pl.getPoints() >= r.getMax_points()) {
-                System.out.println("Team nº" + pl.getTeamID() + " won because they reached the maximum points needed!!!");
+                if (r instanceof Latino || r instanceof Chileno)
+                    System.out.println("Team nº" + pl.getTeamID() + " lost because they reached the maximum points!!!");
+                else
+                    System.out.println("Team nº" + pl.getTeamID() + " won because they reached the maximum points needed!!!");
+
                 return true;
             }
         }

@@ -14,10 +14,6 @@ public class Team {
         points = p;
     }
 
-    public Player getPlayerOfTeam(int idx){
-        return team.get(idx);
-    }
-
     public void addPlayer(Player pl){
         this.team.add(pl);
     }
