@@ -11,5 +11,4 @@ public abstract class Rules {
     public abstract int getMax_points();
     public abstract void givePointsToTeams(List<Player> players);
     public abstract int playerTotalPointsAtRound(Player p);
-    public abstract boolean isFinalizedRound(List<Player> players, DeckDominoCards deck);
 }

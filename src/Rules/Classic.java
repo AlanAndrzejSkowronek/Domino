@@ -8,8 +8,8 @@ import GameExecution.Game;
 
 public class Classic extends Rules {
 
-    private Game g;
     int max_points = 80;
+
     public int initCards(List<DominoCard> deck){
         int numberOfCardsCreated = 0;
         for (int i = 6; i >= 0; i--){
@@ -46,33 +46,6 @@ public class Classic extends Rules {
         }
 
         return totalPoints;
-    }
-
-    @Override
-    public boolean isFinalizedRound(List<Player> players, DeckDominoCards deck) {
-        return isWinner(players) ||  isLockedGame(players, deck);
-    }
-
-    private boolean isWinner(List<Player> players){
-
-        for (Player pl : players){
-            if (pl.isPlayerHandEmpty()){
-                System.out.println("Team nº" + pl.getTeamID() + " won because of " + pl.getName() + "!!!");
-                return true;
-            }
-        }
-        return false;
-    }
-
-    public boolean isLockedGame(List<Player> players, DeckDominoCards deck){
-        if (!deck.isEmpty()) return false;
-
-        for (Player pl2 : players)
-            if (g.verifyPlayableCards(pl2))
-                return false;
-
-        System.out.println("The game is closed! No more moves!");
-        return true;
     }
 
     private int calculateTotalPoints(List<Player> players){

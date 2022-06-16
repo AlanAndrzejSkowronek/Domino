@@ -188,6 +188,28 @@ public class Game {
         }
     }
 
+    public boolean isWinner(List<Player> players){
+
+        for (Player pl : players){
+            if (pl.isPlayerHandEmpty()){
+                System.out.println("Team nº" + pl.getTeamID() + " won because of " + pl.getName() + "!!!");
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isLockedGame(List<Player> players){
+        if (!deck.isEmpty()) return false;
+
+        for (Player pl2 : players)
+            if (verifyPlayableCards(pl2))
+                return false;
+
+        System.out.println("The game is closed! No more moves!");
+        return true;
+    }
+
     private void initPlayersAndGiveCards(List<Player> players){
         int numberOfPlayers = inp.pickNumberOfPlayers();
         inp.createPlayerObjects(numberOfPlayers, listOfPlayers);
@@ -205,7 +227,7 @@ public class Game {
     }
 
     public boolean isFinalizedRound(List<Player> players){
-        return r.isFinalizedRound(players, deck);
+        return isWinner(players) || isLockedGame(players);
     }
 
     public boolean gotMaxPoints(List<Player> players) {
